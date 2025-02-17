@@ -25,8 +25,8 @@
                     <option value="Lung Cancer">Lung Cancer</option>
                     <option value="Kidney Cancer">Kidney Cancer</option>
                     <option value="Stomach Cancer">Stomach Cancer</option>
-                    <option value="brain">Brain Cancer</option>
-                    <option value="blood">Blood Cancer</option>
+                    <option value="Brain Cancer">Brain Cancer</option>
+                    <option value="Blood Cancer">Blood Cancer</option>
                 </select>
             </div>
 
