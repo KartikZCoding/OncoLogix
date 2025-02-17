@@ -15,14 +15,14 @@ include("./header.php");
 
     <!-- Main Content: Pushes Footer Down -->
     <main class="flex-grow flex flex-col items-center justify-center px-6 md:px-16">
-        <div class="flex flex-col md:flex-row items-center justify-center w-full">
+        <div class="flex flex-col sm:flex-col md:flex-col lg:flex-row items-center justify-center w-full">
             <!-- Left: Image -->
-            <div class="w-full md:w-1/2 flex justify-center mt-4">
+            <div class="w-full flex justify-center mt-4">
                 <img src="./assets/img/bg.png" alt="Medical Research" class="w-full h-auto max-w-md md:max-w-full rounded-lg shadow-lg object-contain">
             </div>
 
             <!-- Right: Introduction Text -->
-            <div class="w-full md:w-1/2 text-center md:text-left mt-8 md:mt-0 px-6 ml-4">
+            <div class="w-full text-center md:text-left mt-8 md:mt-5 px-6 ml-4">
                 <h1 class="text-4xl font-bold text-blue-800"> Better cancer outcomes through improved pathology diagnosis.</h1>
                 <p class="mt-4 text-lg leading-relaxed" align="justify">
                     The Tumor Registry is committed to advancing cancer diagnosis and treatment through specialized pathology research.
