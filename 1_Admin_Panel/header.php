@@ -15,7 +15,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <body>
     <!-- Header -->
-    <header class="flex justify-between items-center p-5 bg-white shadow-md relative">
+    <header class="flex justify-between items-center p-5 bg-white shadow-md relative w-full">
         <a href="./index.php">
             <h1 class="text-3xl font-bold text-blue-900 flex items-center ml-0 sm:ml-10">
                 <span class="text-black">O</span><span class="text-blue-500">L</span>
