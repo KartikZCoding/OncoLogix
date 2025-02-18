@@ -10,6 +10,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
+    <link rel="icon" type="image/jpg" href="../logo.jpg">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 

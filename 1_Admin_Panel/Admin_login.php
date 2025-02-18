@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($password == $admin['password']) {
             $_SESSION['admin'] = $admin['username'];
+            $_SESSION['login_activity'] = time();
             header("Location: index.php");
             exit;
         } else {
