@@ -12,6 +12,7 @@ $count = 0;
 if (isset($_GET['cancer_type'])) {
     $cancerType = mysqli_real_escape_string($conn, $_GET['cancer_type']);
     $query = "SELECT 
+        ca.c_id as CancerID,
         p.P_name AS Name,
         p.age AS Age,
         p.p_image as Image,
@@ -94,7 +95,13 @@ if (isset($_GET['cancer_type'])) {
                                 <p class="text-gray-700 text-lg"><strong>Country:</strong> <?= htmlspecialchars($patient['Country']) ?></p>
                             </div>
                         </div>
-                        <a href="./patient-details.php" class="bg-blue-700 text-white px-3 py-[8px] rounded-lg text-lg hover:bg-blue-500 transition mt-4 md:mt-0 md:ml-[11px]">View More</a>
+                        <!-- <a href="./pat_details.php?p_id=<?= htmlspecialchars($patient['CancerID']) ?>" class="bg-blue-700 text-white px-3 py-[8px] rounded-lg text-lg hover:bg-blue-500 transition mt-4 md:mt-0 md:ml-[11px]">View More</a> -->
+                        <form action="./pat_details.php" method="POST">
+                            <input type="hidden" name="c_id" value="<?= htmlspecialchars($patient['CancerID']); ?>">
+                            <button type="submit" class="bg-blue-700 text-white px-3 py-[8px] rounded-lg text-lg hover:bg-blue-500 transition mt-4 md:mt-0 md:ml-[11px]">
+                                View More
+                            </button>
+                        </form>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
