@@ -28,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $doctor_name = $_POST['doctor_name'];
     $specialization = $_POST['specialization'];
     $experience = $_POST['experience'];
+    $doc_email = $_POST['doctor_email'];
     $treatment_procedure = $_POST['treatment_procedure'];
     $hospital_name = $_POST['hospital_name'];
     $hospital_email = $_POST['hospital_email'];
@@ -52,8 +53,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $p_id = $stmt->insert_id;
 
-    $stmt = $conn->prepare("INSERT INTO doctor (d_name, experience, specialization, d_photo) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("siss", $doctor_name, $experience, $specialization, $doctorImage);
+    $stmt = $conn->prepare("INSERT INTO doctor (d_name, experience, specialization, d_photo, email) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sisss", $doctor_name, $experience, $specialization, $doctorImage, $doc_email);
     $stmt->execute();
     $d_id = $stmt->insert_id;
 
@@ -133,8 +134,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label class="block text-gray-600">Experience:</label>
                     <input type="number" name="experience" class="w-full p-2 border rounded-md mb-2" placeholder="Enter Experience (in years)" required>
 
+                    <label class="block text-gray-600">Doctor Email:</label>
+                    <input type="email" name="doctor_email" class="w-full p-2 border rounded-md mb-2" placeholder="Enter Doctor Email" required>
+
                     <label class="block text-gray-600">Doctor Image:</label>
                     <input type="file" name="doctorImage" class="w-full p-2 border rounded-md" accept="image/*" required>
+
                 </div>
             </div>
 
