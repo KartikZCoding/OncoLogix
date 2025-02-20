@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header("Location: pat_card.php?cancer_type=" . urlencode($cancerType));
     exit();
 }
-
+$yearFilter = isset($_GET['year_filter']) ? intval($_GET['year_filter']) : '';
 $patients = [];
 $count = 0;
 if (isset($_GET['cancer_type'])) {
@@ -23,7 +23,11 @@ if (isset($_GET['cancer_type'])) {
     JOIN patient p ON ca.p_id = p.p_id
     JOIN cancer c ON ca.cancer_type = c.cancer_name
     JOIN hospital h ON ca.h_id = h.h_id
-    WHERE c.cancer_name = '$cancerType';";
+    WHERE c.cancer_name = '$cancerType'";
+
+    if (!empty($yearFilter)) {
+        $query .= " AND YEAR(ca.patient_date) = $yearFilter";
+    }
 
     $result = mysqli_query($conn, $query);
     if ($result) {
@@ -71,8 +75,22 @@ if (isset($_GET['cancer_type'])) {
 </head>
 
 <body class="bg-gradient-to-b from-blue-50 to-white flex flex-col items-center min-h-screen pt-0 relative">
-    <div class="count-box mt-[80px]">Patients: <?php echo $count; ?></div>
-    <div class="flex-grow flex flex-col justify-center items-center w-full px-4 md:px-0 mt-10">
+    <div class="count-box mt-[80px] lg:ml-[40px]">Patients: <?php echo $count; ?></div>
+
+    <!-- Filter Form (Upper Right Corner) -->
+    <div class="mt-4 w-full flex justify-end px-6 lg:px-[70px]">
+        <form action="" method="GET" class="flex space-x-2 bg-white shadow-md p-3 rounded-lg">
+            <input type="hidden" name="cancer_type" value="<?= htmlspecialchars($_GET['cancer_type'] ?? '') ?>">
+            <input type="number" name="year_filter" placeholder="YYYY" min="2000" max="<?= date('Y'); ?>"
+                value="<?= htmlspecialchars($yearFilter) ?>"
+                class="border px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition">
+                Filter
+            </button>
+        </form>
+    </div>
+
+    <div class="flex-grow flex flex-col justify-center items-center w-full px-4 md:px-0 mt-5">
         <h1 class="text-3xl font-bold text-blue-900 text-center mb-8">Patient Records</h1>
         <div class="flex flex-col space-y-6 w-full max-w-4xl mb-10">
             <?php if (!empty($patients)): ?>

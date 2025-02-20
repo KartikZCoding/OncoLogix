@@ -4,7 +4,7 @@ session_start();
 include("./header.php");
 
 if (isset($_SESSION["login_activity"])) {
-    if (time() - $_SESSION['login_activity'] > 5) {
+    if (time() - $_SESSION['login_activity'] > 3600) {
         session_unset();
         session_destroy();
         echo "<script>
