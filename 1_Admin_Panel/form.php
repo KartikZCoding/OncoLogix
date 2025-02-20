@@ -22,6 +22,7 @@ if ($result->num_rows > 0) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // $case_id = $_POST['case_id'];
+    $pat_cancer_date = $_POST['pat_cancer_date'];
     $cancer_name = $_POST['cancer_type'];
     $pname = $_POST['pname'];
     $page = $_POST['page'];
@@ -68,8 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $t_id = $stmt->insert_id;
 
-    $stmt = $conn->prepare("INSERT INTO cases (p_id, d_id, h_id, t_id, cancer_type) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("iiiis", $p_id, $d_id, $h_id, $t_id, $cancer_name);
+    $stmt = $conn->prepare("INSERT INTO cases (p_id, d_id, h_id, t_id, cancer_type, patient_date) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("iiiiss", $p_id, $d_id, $h_id, $t_id, $cancer_name, $pat_cancer_date);
     $stmt->execute();
 
     echo "<script>alert('Case inserted successfully');</script>";
@@ -96,7 +97,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2 class="text-2xl font-bold text-center text-blue-900 mb-6">Tumor Case Form</h2>
 
         <form id="myform" action="./form.php" method="POST" enctype="multipart/form-data">
+
             <!-- Case ID & Cancer Type -->
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div class="bg-gray-50/50 p-4 rounded-lg shadow-md backdrop-blur-md">
+                    <h3 class="text-lg font-semibold mb-2 text-gray-800">Case Date</h3>
+                    <input type="date" name="pat_cancer_date" class="w-full p-2 border rounded-md cursor-pointer" placeholder="Enter Case Date" required>
+                </div>
+                <div class="bg-gray-50/50 p-4 rounded-lg shadow-md backdrop-blur-md">
+                    <label class="block text-gray-600 font-semibold mb-2">Cancer Type:</label>
+                    <select name="cancer_type" class="w-full p-2 border rounded-md bg-white shadow-sm cursor-pointer" required>
+                        <option value="">Select Cancer Type</option>
+                        <?php foreach ($cancer_types as $type) { ?>
+                            <option value="<?php echo htmlspecialchars($type); ?>"><?php echo htmlspecialchars($type); ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Case ID & Cancer Type
             <div class="bg-gray-50/50 p-4 rounded-lg shadow-md backdrop-blur-md mb-4">
                 <label class="block text-gray-600 font-semibold mb-2">Cancer Type:</label>
                 <select name="cancer_type" class="w-full p-2 border rounded-md bg-white shadow-sm" required>
@@ -106,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <?php } ?>
                 </select>
 
-            </div>
+            </div> -->
 
             <div class="grid grid-cols-2 gap-4 mb-4">
                 <!-- Patient Details -->
