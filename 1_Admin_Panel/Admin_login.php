@@ -40,6 +40,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            alert(`Your Right click is disabled......`);
+        });
+    </script>
 </head>
 
 <body class="flex items-center justify-center h-screen bg-gradient-to-b from-blue-100 to-white">
