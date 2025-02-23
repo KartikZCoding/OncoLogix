@@ -17,10 +17,10 @@ if (session_status() === PHP_SESSION_NONE) {
 <body>
     <!-- Header -->
     <header class="flex justify-between items-center p-5 bg-white shadow-md relative w-full">
-        <a href="./index.php">
-            <h1 class="text-3xl font-bold text-blue-900 flex items-center ml-0 sm:ml-10">
+        <a href="./index.php" class="ml-0 lg:ml-[100px] md:ml-[50px] sm:ml-0"> <!-- Added left margin on desktop, removed on md & sm -->
+            <h1 class="text-3xl font-bold text-blue-900 flex items-center">
                 <span class="text-black">O</span><span class="text-blue-500">L</span>
-                <span class="ml-2 text-gray-600 hidden sm:hidden md:hidden lg:inline">OncoLogix</span> <!-- Change from 'hidden sm:inline' to 'md:inline hidden' -->
+                <span class="ml-2 text-gray-600 hidden lg:inline">OncoLogix</span>
             </h1>
         </a>
 
@@ -46,7 +46,8 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
 
         <!-- Desktop Navigation -->
-        <nav id="menu" class="hidden md:flex md:items-center space-x-6 mr-[50px] font-bold">
+        <nav id="menu" class="hidden md:flex md:items-center space-x-6 font-bold mr-0 lg:mr-[100px] md:mr-[50px] sm:mr-0">
+            <!-- Added right margin on desktop, removed on md & sm -->
             <a href="./index.php" class="text-gray-700 hover:text-blue-700">Home</a>
             <a href="./form.php" class="text-gray-700 hover:text-blue-700">Cases Details</a>
             <a href="./tumor_coll.php" class="text-gray-700 hover:text-blue-700">Tumor Collections</a>
