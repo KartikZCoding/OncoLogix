@@ -203,7 +203,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <?php
-    include("./footer.php");
+    include("../4_M_A_C/footer.php");
     ?>
     <script>
         document.getElementById("myForm").addEventListener("submit", function() {

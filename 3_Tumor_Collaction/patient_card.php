@@ -75,17 +75,17 @@ if (isset($_GET['cancer_type'])) {
 </head>
 
 <body class="bg-gradient-to-b from-blue-50 to-white flex flex-col items-center min-h-screen pt-0 relative">
-    <div class="count-box mt-[80px] lg:ml-[40px]">Patients: <?php echo $count; ?></div>
+    <div class="count-box mt-[80px] lg:ml-[100px]">Patients: <?php echo $count; ?></div>
 
     <!-- Filter Form (Upper Right Corner) -->
-    <div class="mt-4 w-full flex justify-end px-6 lg:px-[70px]">
+    <div class="mt-4 w-full flex justify-end px-6 lg:pr-[120px]">
         <form action="" method="GET" class="flex space-x-2 bg-white shadow-md p-3 rounded-lg">
             <input type="hidden" name="cancer_type" value="<?= htmlspecialchars($_GET['cancer_type'] ?? '') ?>">
             <input type="number" name="year_filter" placeholder="YYYY" min="2000" max="<?= date('Y'); ?>"
                 value="<?= htmlspecialchars($yearFilter) ?>"
                 class="border px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
             <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition">
-                Filter
+                Search
             </button>
         </form>
     </div>
