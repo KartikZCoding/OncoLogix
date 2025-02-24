@@ -34,9 +34,10 @@ if (session_status() === PHP_SESSION_NONE) {
             </button>
 
             <!-- Mobile Profile Dropdown -->
-            <div id="dropdown-menu-mobile" class="hidden absolute top-full right-0 mt-2 w-40 bg-white shadow-md rounded-md border z-50">
+            <div id="dropdown-menu-mobile" class="hidden absolute top-full right-0 mt-2 w-[170px] bg-white shadow-md rounded-md border z-50">
                 <?php if (isset($_SESSION['admin'])) { ?>
                     <a href="logout.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Logout</a>
+                    <a href="./changepassword.php" class="text-blue-500">Change password</a>
                 <?php } else { ?>
                     <a href="Admin_login.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Login</a>
                 <?php } ?>
@@ -64,9 +65,10 @@ if (session_status() === PHP_SESSION_NONE) {
                 </button>
 
                 <!-- Desktop Profile Dropdown -->
-                <div id="dropdown-menu-desktop" class="hidden absolute top-full right-0 mt-2 w-40 bg-white shadow-md rounded-md border z-50">
+                <div id="dropdown-menu-desktop" class="hidden absolute top-full right-0 mt-2 w-[170px] bg-white shadow-md rounded-md border z-50">
                     <?php if (isset($_SESSION['admin'])) { ?>
                         <a href="logout.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Logout</a>
+                        <a href="./changepassword.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Change password</a>
                     <?php } else { ?>
                         <a href="Admin_login.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Login</a>
                     <?php } ?>

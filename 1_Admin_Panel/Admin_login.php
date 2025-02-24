@@ -51,12 +51,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body class="flex items-center justify-center h-screen bg-gradient-to-b from-blue-100 to-white">
     <div class="bg-white p-6 rounded-lg shadow-lg text-center w-80">
         <h2 class="text-2xl font-semibold text-blue-900">Admin Login</h2>
-        <form class="mt-4" method="post" action="./Admin_login.php">
+        <form class="mt-4" method="post" action="./Admin_login.php" onsubmit="getclick(event)" >
             <input type="text" name="username" placeholder="Username" required class="w-full px-3 py-2 border rounded-md mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <input type="password" name="password" placeholder="Password" required class="w-full px-3 py-2 border rounded-md mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <button type="submit" class="w-full bg-blue-900 text-white py-2 rounded-md hover:bg-blue-700">Login</button>
+            <a href="./forgetpassword.php" class="text-blue-500">Forget password ?</a>
+            <button type="submit" class="w-full bg-blue-900 text-white py-2 rounded-md hover:bg-blue-700 mt-[5px]" id="btn">Login</button>
         </form>
     </div>
+    <script>
+        let uname = document.getElementsByName('username');
+        function getclick(event) {
+            // to prevent the form submission to run the javascript properly........
+            event.preventDefault();
+            if (uname !== "") {
+                document.getElementById('btn').innerHTML = 'Loging.....';
+                setTimeout(() =>  event.target.submit(),500)
+            }else{
+                    document.getElementById('btn').innerHTML = 'Login';
+            }
+               return false;
+        }
+    </script>
 </body>
 
 </html>
