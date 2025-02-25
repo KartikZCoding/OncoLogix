@@ -129,7 +129,7 @@ if ($result && mysqli_num_rows($result) > 0) {
         </div>
     </div>
 
-    <?php include("./footer.php") ?>
+    <?php include("../4_M_A_C/footer.php") ?>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
