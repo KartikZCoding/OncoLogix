@@ -69,7 +69,7 @@
             </ul>
         </section>
 
-        <!-- Latest Research & Innovations -->
+        <!-- Latest Research & Innovations
         <section class="bg-white p-6 md:p-8 rounded-lg shadow-md mt-12 w-full max-w-7xl">
             <h2 class="text-2xl font-bold text-blue-700 text-center">Latest Research & Innovations</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
@@ -82,7 +82,7 @@
                     <p class="text-gray-700 mt-2">Pathologists are utilizing advanced imaging techniques to improve tumor detection accuracy.</p>
                 </div>
             </div>
-        </section>
+        </section> -->
     </main>
 
     <script>
