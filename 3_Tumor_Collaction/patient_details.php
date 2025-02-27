@@ -1,16 +1,27 @@
 <?php
+ob_start();
+// Start session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 include("../1_Admin_Panel/db_conn.php");
 
-// Check if c_id is set in GET or POST request
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['c_id'])) {
-    $c_id = intval($_POST['c_id']);  // Ensure it's an integer
+// Check if c_id is set via POST or GET and store it in session
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['c_id'])) {
+    $_SESSION['c_id'] = intval($_POST['c_id']);
+    // $_SESSION['c_id_time'] = time();
 } elseif (isset($_GET['c_id'])) {
-    $c_id = intval($_GET['c_id']);  // Ensure it's an integer
-} else {
+    $_SESSION['c_id'] = intval($_GET['c_id']);
+    // $_SESSION['c_id_time'] = time();
+}
+
+if (!isset($_SESSION['c_id'])) {
     die("❌ Error: No patient selected! Please go back and select a patient.");
 }
 
-// SQL Query to Fetch Patient, Doctor, Hospital, and Treatment Data
+$c_id = intval($_SESSION['c_id']);
+
 $query = "SELECT
     ca.c_id AS CancerID,
     ca.cancer_type AS CancerType,
@@ -37,30 +48,32 @@ JOIN hospital h ON ca.h_id = h.h_id
 JOIN treatment t ON ca.t_id = t.t_id
 WHERE ca.c_id = ?";
 
-// Prepare and execute the query
+
 $stmt = mysqli_prepare($conn, $query);
 if (!$stmt) {
-    die("❌ Error: Failed to prepare statement.");
+    die("❌ Error: Failed to prepare SQL statement.");
 }
 
-// Bind parameter (ensure correct data type)
 mysqli_stmt_bind_param($stmt, "i", $c_id);
-
-// Execute statement
 if (!mysqli_stmt_execute($stmt)) {
-    die("❌ Error: Execution failed.");
+    die("❌ Error: Query execution failed.");
 }
 
-// Get results
-$result = mysqli_stmt_get_result($stmt);
 
-// Fetch data
-if ($result && mysqli_num_rows($result) > 0) {
+$result = mysqli_stmt_get_result($stmt);
+if (!$result) {
+    die("❌ Error: Failed to retrieve results.");
+}
+
+
+if (mysqli_num_rows($result) > 0) {
     $patientDetails = mysqli_fetch_assoc($result);
 } else {
     die("❌ Error: No records found for Cancer ID $c_id.");
 }
+
 ?>
+
 
 
 <!DOCTYPE html>
@@ -79,7 +92,7 @@ if ($result && mysqli_num_rows($result) > 0) {
 
 <body class="bg-gradient-to-b from-blue-50 to-white">
     <div class="container mx-auto p-6 shadow-md rounded-lg mt-[70px] bg-gradient-to-b from-white to-blue-50 lg:w-[80vw]">
-        <button id="downloadPDF" onclick="generatePDF()" class="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg shadow">Download PDF</button>
+        <button id="downloadPDF" onclick="generatePDF()" class="mb-4 ml-2 px-6 py-2 bg-blue-600 text-white rounded-lg shadow">Download PDF</button>
         <div class="flex flex-wrap md:flex-nowrap gap-6">
             <!-- Patient Details Card -->
             <div class="flex-1 bg-white/70 shadow-lg p-6 rounded-lg border border-gray-200">
@@ -164,9 +177,9 @@ if ($result && mysqli_num_rows($result) > 0) {
                     y += 8;
                     if (patientImg) doc.addImage(patientImg, "JPEG", 10, y, 30, 30);
                     doc.setFontSize(12);
-                    doc.text(`Name: <?= htmlspecialchars($patientDetails['PatientName']); ?>`, 50, y + 6);
-                    doc.text(`Age: <?= htmlspecialchars($patientDetails['PatientAge']); ?>`, 50, y + 12);
-                    doc.text(`Diagnosis: <?= htmlspecialchars($patientDetails['CancerType']); ?>`, 50, y + 18);
+                    doc.text(Name: <?= htmlspecialchars($patientDetails['PatientName']); ?>, 50, y + 6);
+                    doc.text(Age: <?= htmlspecialchars($patientDetails['PatientAge']); ?>, 50, y + 12);
+                    doc.text(Diagnosis: <?= htmlspecialchars($patientDetails['CancerType']); ?>, 50, y + 18);
                     y += 40;
 
                     // Doctor Details
@@ -175,10 +188,10 @@ if ($result && mysqli_num_rows($result) > 0) {
                     y += 8;
                     if (doctorImg) doc.addImage(doctorImg, "JPEG", 10, y, 30, 30);
                     doc.setFontSize(12);
-                    doc.text(`Name: <?= htmlspecialchars($patientDetails['DoctorName']); ?>`, 50, y + 6);
-                    doc.text(`Specialization: <?= htmlspecialchars($patientDetails['DoctorSpe']); ?>`, 50, y + 12);
-                    doc.text(`Experience: <?= htmlspecialchars($patientDetails['DoctorExp']); ?> Years`, 50, y + 18);
-                    doc.text(`Email: <?= htmlspecialchars($patientDetails['DoctorEmail']); ?>`, 50, y + 24);
+                    doc.text(Name: <?= htmlspecialchars($patientDetails['DoctorName']); ?>, 50, y + 6);
+                    doc.text(Specialization: <?= htmlspecialchars($patientDetails['DoctorSpe']); ?>, 50, y + 12);
+                    doc.text(Experience: <?= htmlspecialchars($patientDetails['DoctorExp']); ?> Years, 50, y + 18);
+                    doc.text(Email: <?= htmlspecialchars($patientDetails['DoctorEmail']); ?>, 50, y + 24);
                     y += 40;
 
                     // Hospital Information
@@ -186,13 +199,13 @@ if ($result && mysqli_num_rows($result) > 0) {
                     doc.text("Hospital Information", 10, y);
                     y += 8;
                     doc.setFontSize(12);
-                    doc.text(`Name: <?= htmlspecialchars($patientDetails['HosName']); ?>`, 10, y);
+                    doc.text(Name: <?= htmlspecialchars($patientDetails['HosName']); ?>, 10, y);
                     y += 6;
-                    doc.text(`Contact: <?= htmlspecialchars($patientDetails['HosContact']); ?>`, 10, y);
+                    doc.text(Contact: <?= htmlspecialchars($patientDetails['HosContact']); ?>, 10, y);
                     y += 6;
-                    doc.text(`Email: <?= htmlspecialchars($patientDetails['HosEmail']); ?>`, 10, y);
+                    doc.text(Email: <?= htmlspecialchars($patientDetails['HosEmail']); ?>, 10, y);
                     y += 6;
-                    doc.text(`Location: <?= htmlspecialchars($patientDetails['HosCity']) . ', ' . htmlspecialchars($patientDetails['HosState']) . ', ' . htmlspecialchars($patientDetails['HosCountry']); ?>`, 10, y);
+                    doc.text(Location: <?= htmlspecialchars($patientDetails['HosCity']) . ', ' . htmlspecialchars($patientDetails['HosState']) . ', ' . htmlspecialchars($patientDetails['HosCountry']); ?>, 10, y);
                     y += 20;
 
                     // Treatment Details
@@ -201,7 +214,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                     y += 8;
                     if (treatImg) doc.addImage(treatImg, "JPEG", 10, y, 40, 40);
                     doc.setFontSize(12);
-                    let treatmentText = `Treatment Given: <?= htmlspecialchars($patientDetails['TreatGiven']); ?>`;
+                    let treatmentText = Treatment Given: <?= htmlspecialchars($patientDetails['TreatGiven']); ?>;
                     let splitTreatmentText = doc.splitTextToSize(treatmentText, 140);
                     doc.text(splitTreatmentText, 60, y + 10);
                     y += 50;
