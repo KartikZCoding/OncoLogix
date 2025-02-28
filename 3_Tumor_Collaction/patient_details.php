@@ -177,9 +177,9 @@ if (mysqli_num_rows($result) > 0) {
                     y += 8;
                     if (patientImg) doc.addImage(patientImg, "JPEG", 10, y, 30, 30);
                     doc.setFontSize(12);
-                    doc.text(Name: <?= htmlspecialchars($patientDetails['PatientName']); ?>, 50, y + 6);
-                    doc.text(Age: <?= htmlspecialchars($patientDetails['PatientAge']); ?>, 50, y + 12);
-                    doc.text(Diagnosis: <?= htmlspecialchars($patientDetails['CancerType']); ?>, 50, y + 18);
+                    doc.text(`Name: <?= htmlspecialchars($patientDetails['PatientName']); ?>`, 50, y + 6);
+                    doc.text(`Age: <?= htmlspecialchars($patientDetails['PatientAge']); ?>`, 50, y + 12);
+                    doc.text(`Diagnosis: <?= htmlspecialchars($patientDetails['CancerType']); ?>`, 50, y + 18);
                     y += 40;
 
                     // Doctor Details
@@ -188,10 +188,10 @@ if (mysqli_num_rows($result) > 0) {
                     y += 8;
                     if (doctorImg) doc.addImage(doctorImg, "JPEG", 10, y, 30, 30);
                     doc.setFontSize(12);
-                    doc.text(Name: <?= htmlspecialchars($patientDetails['DoctorName']); ?>, 50, y + 6);
-                    doc.text(Specialization: <?= htmlspecialchars($patientDetails['DoctorSpe']); ?>, 50, y + 12);
-                    doc.text(Experience: <?= htmlspecialchars($patientDetails['DoctorExp']); ?> Years, 50, y + 18);
-                    doc.text(Email: <?= htmlspecialchars($patientDetails['DoctorEmail']); ?>, 50, y + 24);
+                    doc.text(`Name: <?= htmlspecialchars($patientDetails['DoctorName']); ?>`, 50, y + 6);
+                    doc.text(`Specialization: <?= htmlspecialchars($patientDetails['DoctorSpe']); ?>`, 50, y + 12);
+                    doc.text(`Experience: <?= htmlspecialchars($patientDetails['DoctorExp']); ?> Years`, 50, y + 18);
+                    doc.text(`Email: <?= htmlspecialchars($patientDetails['DoctorEmail']); ?>`, 50, y + 24);
                     y += 40;
 
                     // Hospital Information
@@ -199,13 +199,13 @@ if (mysqli_num_rows($result) > 0) {
                     doc.text("Hospital Information", 10, y);
                     y += 8;
                     doc.setFontSize(12);
-                    doc.text(Name: <?= htmlspecialchars($patientDetails['HosName']); ?>, 10, y);
+                    doc.text(`Name: <?= htmlspecialchars($patientDetails['HosName']); ?>`, 10, y);
                     y += 6;
-                    doc.text(Contact: <?= htmlspecialchars($patientDetails['HosContact']); ?>, 10, y);
+                    doc.text(`Contact: <?= htmlspecialchars($patientDetails['HosContact']); ?>`, 10, y);
                     y += 6;
-                    doc.text(Email: <?= htmlspecialchars($patientDetails['HosEmail']); ?>, 10, y);
+                    doc.text(`Email: <?= htmlspecialchars($patientDetails['HosEmail']); ?>`, 10, y);
                     y += 6;
-                    doc.text(Location: <?= htmlspecialchars($patientDetails['HosCity']) . ', ' . htmlspecialchars($patientDetails['HosState']) . ', ' . htmlspecialchars($patientDetails['HosCountry']); ?>, 10, y);
+                    doc.text(`Location: <?= htmlspecialchars($patientDetails['HosCity']) . ', ' . htmlspecialchars($patientDetails['HosState']) . ', ' . htmlspecialchars($patientDetails['HosCountry']); ?>`, 10, y);
                     y += 20;
 
                     // Treatment Details
@@ -214,7 +214,7 @@ if (mysqli_num_rows($result) > 0) {
                     y += 8;
                     if (treatImg) doc.addImage(treatImg, "JPEG", 10, y, 40, 40);
                     doc.setFontSize(12);
-                    let treatmentText = Treatment Given: <?= htmlspecialchars($patientDetails['TreatGiven']); ?>;
+                    let treatmentText = `Treatment Given: <?= htmlspecialchars($patientDetails['TreatGiven']); ?>`;
                     let splitTreatmentText = doc.splitTextToSize(treatmentText, 140);
                     doc.text(splitTreatmentText, 60, y + 10);
                     y += 50;
