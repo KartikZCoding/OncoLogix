@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit();
 }
 
+$yearFilter = isset($_GET['year_filter']) ? intval($_GET['year_filter']) : '';
 $searchQuery = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
 $patients = [];
 $count = 0;
@@ -28,6 +29,10 @@ if (isset($_GET['cancer_type'])) {
     JOIN hospital h ON ca.h_id = h.h_id
     LEFT JOIN treatment t ON ca.t_id = t.t_id
     WHERE c.cancer_name = '$cancerType'";
+
+if (!empty($yearFilter)) {
+    $query .= " AND YEAR(ca.patient_date) = $yearFilter";
+}
 
     if (!empty($searchQuery)) {
         $query .= " AND (LOWER(p.P_name) LIKE LOWER('%$searchQuery%') 
@@ -78,8 +83,21 @@ if (isset($_GET['cancer_type'])) {
 <body class="bg-gradient-to-b from-blue-50 to-white flex flex-col items-center min-h-screen pt-0 relative">
     <div class="count-box mt-[80px] lg:ml-[100px]">Patients: <?php echo $count; ?></div>
 
+<!-- Filter Form (Upper Right Corner) -->
+<div class="mt-4 w-full flex justify-end px-6 lg:pr-[120px]">
+        <form action="" method="GET" class="flex space-x-2 bg-white shadow-md p-3 rounded-lg">
+            <input type="hidden" name="cancer_type" value="<?= htmlspecialchars($_GET['cancer_type'] ?? '') ?>">
+            <input type="number" name="year_filter" placeholder="YYYY" min="2000" max="<?= date('Y'); ?>"
+                value="<?= htmlspecialchars($yearFilter) ?>"
+                class="border px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition">
+                Search
+            </button>
+        </form>
+    </div>
+
     <div class="mt-4 w-full flex justify-center px-6 lg:px-12">
-        <form action="" method="GET" class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 bg-white shadow-md p-3 rounded-lg items-center">
+        <form action="" method="GET" class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 bg-white shadow-md p-3 rounded-lg items-center absolute top-[100px]">
             <input type="hidden" name="cancer_type" value="<?= htmlspecialchars($_GET['cancer_type'] ?? '') ?>">
             <input type="text" id="search" name="search" placeholder="Search by Name / Hospital / Country / Treatment..."
                 value="<?= htmlspecialchars($searchQuery) ?>"
